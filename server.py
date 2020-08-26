@@ -1,7 +1,11 @@
-from flask import Flask, request, send_file, after_this_request
+from flask import Flask, request, send_file, after_this_request, jsonify
 from services.downloader_service import DownloadService
 from os import remove
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return jsonify(message="hi")
 
 service = DownloadService()
 VALID_SYMBOLS = "!@#$%^&*()_-+={}[]"
