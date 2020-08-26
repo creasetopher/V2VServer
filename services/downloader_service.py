@@ -1,6 +1,7 @@
 # importing the module
 from pytube import YouTube
 import moviepy.editor as mp
+from os import remove
 
 # where to save
 
@@ -8,7 +9,7 @@ SAVE_PATH = "./resources/downloads/"  # to_do
 class DownloadService:
     def __init__(self):
 
-        # a YouTube object, check pytub docs
+        # a YouTube object, check pytube docs
         self.media = None
 
     # if successful, sets media to YouTube obj and returns true
@@ -36,13 +37,20 @@ class DownloadService:
             stream = streams.first()
             filename = self.media.title
             filename = filename.replace('/', '-')
+
+            # download mp4 from youtube
             dl_path = stream.download(filename = filename)
 
+            # convert mp4 to mp3
             clip = mp.AudioFileClip(dl_path)
 
             output_filepath = SAVE_PATH + filename + '.mp3'
 
+            # write mp3 to resources dir
             clip.write_audiofile(output_filepath)
+
+            print("Deleting audio file from " + dl_path)
+            remove(dl_path)
             return output_filepath
 
 
