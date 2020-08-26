@@ -1,7 +1,11 @@
 from flask import Flask, request, send_file, after_this_request, jsonify
 from services.downloader_service import DownloadService
 from os import remove
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route('/')
 def home():
